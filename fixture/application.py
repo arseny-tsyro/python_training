@@ -1,6 +1,7 @@
 __author__ = 'Arseniy'
 from selenium.webdriver.firefox.webdriver import WebDriver
 from fixture.session import SessionHelper
+from fixture.group import GroupHelper
 
 
 class Application:
@@ -8,33 +9,11 @@ class Application:
         self.wd = WebDriver()
         self.wd.implicitly_wait(60)
         self.session = SessionHelper(self)
-
-    def load_groups_page(self):
-        wd = self.wd
-        wd.find_element_by_link_text("group page").click()
+        self.group = GroupHelper(self)
 
     def load_home_page(self):
         wd = self.wd
         wd.find_element_by_link_text("home page").click()
-
-    def add_group(self, group):
-        wd = self.wd
-        # go to groups page
-        wd.find_element_by_link_text("groups").click()
-        # create new group
-        wd.find_element_by_name("new").click()
-        wd.find_element_by_name("group_name").click()
-        wd.find_element_by_name("group_name").clear()
-        wd.find_element_by_name("group_name").send_keys(group.name)
-        wd.find_element_by_name("group_header").click()
-        wd.find_element_by_name("group_header").clear()
-        wd.find_element_by_name("group_header").send_keys(group.header)
-        wd.find_element_by_name("group_footer").click()
-        wd.find_element_by_name("group_footer").clear()
-        wd.find_element_by_name("group_footer").send_keys(group.footer)
-        # submit
-        wd.find_element_by_name("submit").click()
-        self.load_groups_page()
 
     def add_contact(self, contact):
         wd = self.wd
