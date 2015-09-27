@@ -1,15 +1,13 @@
 __author__ = 'Arseniy'
 from selenium.webdriver.firefox.webdriver import WebDriver
+from fixture.session import SessionHelper
 
 
 class Application:
     def __init__(self):
         self.wd = WebDriver()
         self.wd.implicitly_wait(60)
-
-    def logout(self):
-        wd = self.wd
-        wd.find_element_by_link_text("Logout").click()
+        self.session = SessionHelper(self)
 
     def load_groups_page(self):
         wd = self.wd
@@ -116,18 +114,6 @@ class Application:
         # submit
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
         self.load_home_page()
-
-    def login(self, username, password):
-        wd = self.wd
-        self.load_login_page()
-        wd.find_element_by_name("user").click()
-        wd.find_element_by_name("user").clear()
-        wd.find_element_by_name("user").send_keys(username)
-        wd.find_element_by_id("content").click()
-        wd.find_element_by_name("pass").click()
-        wd.find_element_by_name("pass").clear()
-        wd.find_element_by_name("pass").send_keys(password)
-        wd.find_element_by_css_selector("input[type=\"submit\"]").click()
 
     def load_login_page(self):
         wd = self.wd
