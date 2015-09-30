@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 __author__ = 'Arseniy'
 
 
@@ -27,4 +28,14 @@ class GroupHelper:
         wd.find_element_by_name("group_footer").send_keys(group.footer)
         # submit
         wd.find_element_by_name("submit").click()
+        self.load_groups_page()
+
+    def delete_first(self):
+        wd = self.app.wd
+        # go to groups page
+        wd.find_element_by_link_text("groups").click()
+        # check the first group
+        wd.find_element_by_name("selected[]").click()
+        # submit deletion
+        wd.find_element_by_name("delete").click()
         self.load_groups_page()
