@@ -30,6 +30,27 @@ class GroupHelper:
         wd.find_element_by_name("submit").click()
         self.load_groups_page()
 
+    def edit_first(self):
+        wd = self.app.wd
+        # go to groups page
+        wd.find_element_by_link_text("groups").click()
+        # select the first group
+        wd.find_element_by_name("selected[]").click()
+        # go to edit page
+        wd.find_element_by_name("edit").click()
+        # edit info
+        wd.find_element_by_name("group_name").click()
+        wd.find_element_by_name("group_name").clear()
+        wd.find_element_by_name("group_name").send_keys("EDITD adfsdf")
+        wd.find_element_by_name("group_header").click()
+        wd.find_element_by_name("group_header").clear()
+        wd.find_element_by_name("group_header").send_keys("EDIT asdfa")
+        wd.find_element_by_name("group_footer").click()
+        wd.find_element_by_name("group_footer").clear()
+        wd.find_element_by_name("group_footer").send_keys("edit asf")
+        # submit changes
+        wd.find_element_by_name("update").click()
+
     def delete_first(self):
         wd = self.app.wd
         # go to groups page
