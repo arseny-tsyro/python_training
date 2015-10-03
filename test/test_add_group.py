@@ -16,4 +16,4 @@ def test_del_first_group(app):
 
 
 def test_edit_first_group(app):
-    app.group.edit_first(name="Edited name")
+    app.group.edit_first()
