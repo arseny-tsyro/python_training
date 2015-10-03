@@ -9,6 +9,8 @@ class GroupHelper:
 
     def load_groups_page(self):
         wd = self.app.wd
+        if wd.current_url.endswith("/group.pgp") and len(wd.find_element_by_name("new")) > 0:
+            return
         wd.find_element_by_link_text("groups").click()
 
     def create(self, group):
