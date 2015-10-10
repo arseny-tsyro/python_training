@@ -16,16 +16,3 @@ def test_add_empty_contact(app):
         Contact(firstname="", middlename="", lastname="", nickname="", title="", company="", address="", home_num="",
                 mobile_num="", work_num="", fax_num="", email2="", email3="", homepage="", byear="", ayear="",
                 address2="", phone2="", notes=""))
-
-
-def test_del_first_contact(app):
-    if app.contact.count() == 0:
-        app.contact.create(Contact(firstname="Test"))
-    app.contact.delete_first()
-
-
-def test_edit_first_contact(app):
-    if app.contact.count() == 0:
-        app.contact.create(Contact(firstname="Test"))
-    app.contact.edit_first()
-
