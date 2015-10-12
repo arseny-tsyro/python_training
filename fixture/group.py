@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 __author__ = 'Arseniy'
+from model.group import Group
 
 
 class GroupHelper:
@@ -32,7 +33,7 @@ class GroupHelper:
         wd.find_element_by_name("submit").click()
         self.load_groups_page()
 
-    def edit_first(self):
+    def edit_first(self, group):
         wd = self.app.wd
         # go to groups page
         wd.find_element_by_link_text("groups").click()
@@ -41,15 +42,18 @@ class GroupHelper:
         # go to edit page
         wd.find_element_by_name("edit").click()
         # edit info
-        wd.find_element_by_name("group_name").click()
-        wd.find_element_by_name("group_name").clear()
-        wd.find_element_by_name("group_name").send_keys("EDITD adfsdf")
-        wd.find_element_by_name("group_header").click()
-        wd.find_element_by_name("group_header").clear()
-        wd.find_element_by_name("group_header").send_keys("EDIT asdfa")
-        wd.find_element_by_name("group_footer").click()
-        wd.find_element_by_name("group_footer").clear()
-        wd.find_element_by_name("group_footer").send_keys("edit asf")
+        if group.name:
+            wd.find_element_by_name("group_name").click()
+            wd.find_element_by_name("group_name").clear()
+            wd.find_element_by_name("group_name").send_keys(group.name)
+        if group.header:
+            wd.find_element_by_name("group_header").click()
+            wd.find_element_by_name("group_header").clear()
+            wd.find_element_by_name("group_header").send_keys(group.header)
+        if group.footer:
+            wd.find_element_by_name("group_footer").click()
+            wd.find_element_by_name("group_footer").clear()
+            wd.find_element_by_name("group_footer").send_keys(group.footer)
         # submit changes
         wd.find_element_by_name("update").click()
 
@@ -67,3 +71,15 @@ class GroupHelper:
         wd = self.app.wd
         self.load_groups_page()
         return len(wd.find_elements_by_name("selected[]"))
+
+    def get_group_list(self):
+        wd = self.app.wd
+        self.load_groups_page()
+        glist = []
+        for element in wd.find_elements_by_css_selector("span.group"):
+            text = element.text
+            id = element.find_element_by_name("selected[]").get_attribute("value")
+            glist.append(Group(name=text, id=id))
+        return glist
+
+
