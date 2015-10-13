@@ -2,9 +2,10 @@ __author__ = 'arseny'
 
 
 class Contact:
-    def __init__(self, firstname="", middlename="", lastname="", nickname="", title="", company="", address="",
-                 home_num="", mobile_num="", work_num="", fax_num="", email2="", email3="", homepage="", byear="",
-                 ayear="", address2="", phone2="", notes=""):
+    def __init__(self, id=None, firstname=None, middlename=None, lastname=None, nickname=None, title=None, company=None,
+                 address=None, home_num=None, mobile_num=None, work_num=None, fax_num=None, email2=None, email3=None,
+                 homepage=None, byear=None, ayear=None, address2=None, phone2=None, notes=None):
+        self.id = id
         self.firstname = firstname
         self.middlename = middlename
         self.lastname = lastname
@@ -24,3 +25,6 @@ class Contact:
         self.address2 = address2
         self.phone2 = phone2
         self.notes = notes
+
+    def __repr__(self):
+        return "%s: %s %s" % (self.id, self.firstname, self.lastname)

@@ -4,15 +4,21 @@ from model.contact import Contact
 
 
 def test_add_contact(app):
-    app.contact.create(
-        Contact(firstname="asdf", middlename="asdfasd", lastname="fdsfsd", nickname="sdfsd", title="sdfsdf",
+    old_contacts = app.contact.get_contact_list()
+    contact = Contact(firstname="asdf", middlename="asdfasd", lastname="fdsfsd", nickname="sdfsd", title="sdfsdf",
                 company="fdsfsdf", address="sdfdf", home_num="1212", mobile_num="12212", work_num="21212", fax_num="50",
                 email2="afasd@adf", email3="asdsd@asdf", homepage="asdfsad.com", byear="1999", ayear="1980",
-                address2="fdsafasdf", phone2="dsafdsf", notes="asdfd"))
+                address2="fdsafasdf", phone2="dsafdsf", notes="asdfd")
+    app.contact.create(contact)
+    new_contacts = app.contact.get_contact_list()
+    assert len(old_contacts) + 1 == len(new_contacts)
 
 
 def test_add_empty_contact(app):
-    app.contact.create(
-        Contact(firstname="", middlename="", lastname="", nickname="", title="", company="", address="", home_num="",
+    old_contacts = app.contact.get_contact_list()
+    contact = Contact(firstname="", middlename="", lastname="", nickname="", title="", company="", address="", home_num="",
                 mobile_num="", work_num="", fax_num="", email2="", email3="", homepage="", byear="", ayear="",
-                address2="", phone2="", notes=""))
+                address2="", phone2="", notes="")
+    app.contact.create(contact)
+    new_contacts = app.contact.get_contact_list()
+    assert len(old_contacts) + 1 == len(new_contacts)
