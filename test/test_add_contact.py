@@ -5,13 +5,15 @@ from model.contact import Contact
 
 def test_add_contact(app):
     old_contacts = app.contact.get_contact_list()
-    contact = Contact(firstname="asdf", middlename="asdfasd", lastname="fdsfsd", nickname="sdfsd", title="sdfsdf",
+    contact = Contact(firstname="John", middlename="sdf", lastname="Smith", nickname="sdfsd", title="sdfsdf",
                 company="fdsfsdf", address="sdfdf", home_num="1212", mobile_num="12212", work_num="21212", fax_num="50",
                 email2="afasd@adf", email3="asdsd@asdf", homepage="asdfsad.com", byear="1999", ayear="1980",
                 address2="fdsafasdf", phone2="dsafdsf", notes="asdfd")
     app.contact.create(contact)
     new_contacts = app.contact.get_contact_list()
     assert len(old_contacts) + 1 == len(new_contacts)
+    old_contacts.append(contact)
+    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
 
 
 def test_add_empty_contact(app):
@@ -22,3 +24,5 @@ def test_add_empty_contact(app):
     app.contact.create(contact)
     new_contacts = app.contact.get_contact_list()
     assert len(old_contacts) + 1 == len(new_contacts)
+    old_contacts.append(contact)
+    assert sorted(old_contacts, key=Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
