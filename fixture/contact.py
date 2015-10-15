@@ -7,6 +7,16 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
+    def load_home_page(self):
+        wd = self.app.wd
+        if len(wd.find_elements_by_link_text("Last name")) > 0:
+            return
+        wd.find_element_by_link_text("home").click()
+
+    def select_by_index(self, index):
+        wd = self.app.wd
+        wd.find_elements_by_name("selected[]")[index].click()
+
     def create(self, contact):
         wd = self.app.wd
         # go to new contact page
@@ -88,9 +98,13 @@ class ContactHelper:
         self.contact_cache = None
 
     def edit_first(self, contact):
+        self.edit_by_index(0, contact)
+
+    def edit_by_index(self, index, contact):
         wd = self.app.wd
+        self.load_home_page()
         # go to edit page
-        wd.find_element_by_css_selector("img[alt=\"Edit\"]").click()
+        wd.find_elements_by_css_selector("img[alt=\"Edit\"]")[index].click()
         # edit data
         if contact.firstname:
             wd.find_element_by_name("firstname").click()
@@ -182,21 +196,17 @@ class ContactHelper:
         self.contact_cache = None
 
     def delete_first(self):
+        self.delete_by_index(0)
+
+    def delete_by_index(self, index):
         wd = self.app.wd
-        # check the first contact
-        wd.find_element_by_name("selected[]").click()
+        self.select_by_index(index)
         # submit deletion
         wd.find_element_by_xpath("//div[@id='content']/form[2]/div[2]/input").click()
         # accept and close dialogue window
         wd.switch_to_alert().accept()
         self.load_home_page()
         self.contact_cache = None
-
-    def load_home_page(self):
-        wd = self.app.wd
-        if len(wd.find_elements_by_link_text("Last name")) > 0:
-            return
-        wd.find_element_by_link_text("home").click()
 
     def count(self):
         wd = self.app.wd
