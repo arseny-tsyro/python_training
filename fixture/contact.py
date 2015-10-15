@@ -85,6 +85,7 @@ class ContactHelper:
         # submit
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
         self.load_home_page()
+        self.contact_cache = None
 
     def edit_first(self, contact):
         wd = self.app.wd
@@ -178,6 +179,7 @@ class ContactHelper:
         # submit changes
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[22]").click()
         self.load_home_page()
+        self.contact_cache = None
 
     def delete_first(self):
         wd = self.app.wd
@@ -188,6 +190,7 @@ class ContactHelper:
         # accept and close dialogue window
         wd.switch_to_alert().accept()
         self.load_home_page()
+        self.contact_cache = None
 
     def load_home_page(self):
         wd = self.app.wd
@@ -200,14 +203,17 @@ class ContactHelper:
         self.load_home_page()
         return len(wd.find_elements_by_name("selected[]"))
 
+    contact_cache = None
+
     def get_contact_list(self):
-        wd = self.app.wd
-        self.load_home_page()
-        clist = []
-        for element in wd.find_elements_by_name("entry"):
-            entries = element.find_elements_by_css_selector("td")
-            last_name = entries[1].text
-            first_name = entries[2].text
-            id =  element.find_element_by_name("selected[]").get_attribute("value")
-            clist.append(Contact(id=id, firstname=first_name, lastname=last_name))
-        return clist
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.load_home_page()
+            self.contact_cache = []
+            for element in wd.find_elements_by_name("entry"):
+                entries = element.find_elements_by_css_selector("td")
+                last_name = entries[1].text
+                first_name = entries[2].text
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                self.contact_cache.append(Contact(id=id, firstname=first_name, lastname=last_name))
+        return list(self.contact_cache)
