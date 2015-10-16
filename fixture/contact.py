@@ -104,7 +104,7 @@ class ContactHelper:
         wd = self.app.wd
         self.load_home_page()
         # go to edit page
-        wd.find_elements_by_css_selector("img[alt=\"Edit\"]")[index].click()
+        wd.find_elements_by_css_selector('img[alt="Edit"]')[index].click()
         # edit data
         if contact.firstname:
             wd.find_element_by_name("firstname").click()

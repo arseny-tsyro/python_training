@@ -1,4 +1,4 @@
-__author__ = 'arseny'
+__author__ = 'Arseniy'
 from sys import maxsize
 
 

@@ -1,4 +1,4 @@
-__author__ = 'arseny'
+__author__ = 'Arseniy'
 from sys import maxsize
 
 
@@ -38,4 +38,4 @@ class Contact:
                self.lastname == other.lastname
 
     def __repr__(self):
-        return "%s: %s %s" % (self.id, self.firstname, self.lastname)
+        return "(%s: %s %s)" % (self.id, self.firstname, self.lastname)
