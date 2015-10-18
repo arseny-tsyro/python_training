@@ -11,12 +11,11 @@ def test_phones_on_home_page(app):
 
 
 def test_phones_on_contact_view_page(app):
-    contact_from_view_page = app.contact.get_contact_from_view_page(0)
+    text_from_view_page = app.contact.get_text_from_view_page(0)
     contact_from_edit_page = app.contact.get_contact_info_from_edit_page(0)
-    assert contact_from_view_page.home_num == contact_from_edit_page.home_num
-    assert contact_from_view_page.mobile_num == contact_from_edit_page.mobile_num
-    assert contact_from_view_page.work_num == contact_from_edit_page.work_num
-    assert contact_from_view_page.phone2 == contact_from_edit_page.phone2
+    phones_from_edit_page = get_phones_like_on_view_page(contact_from_edit_page)
+    for phone in phones_from_edit_page:
+        assert phone in text_from_view_page
 
 
 def test_info_from_some_contact(app):
@@ -48,3 +47,16 @@ def merge_phones_like_on_home_page(con):
     return "\n".join(filter(lambda x: x != "",
                             map(lambda x: clear(x),
                                 filter(lambda x: x is not None, phones))))
+
+
+def get_phones_like_on_view_page(con):
+    phones = []
+    if con.home_num is not None:
+        phones.append("H: %s" % con.home_num)
+    if con.mobile_num is not None:
+        phones.append("M: %s" % con.mobile_num)
+    if con.work_num is not None:
+        phones.append("W: %s" % con.work_num)
+    if con.phone2 is not None:
+        phones.append("P: %s" % con.phone2)
+    return phones

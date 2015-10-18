@@ -278,3 +278,9 @@ class ContactHelper:
         return Contact(home_num=home_num, mobile_num=mobile_num,
                        work_num=work_num, phone2=phone2)
 
+    def get_text_from_view_page(self, index):
+        wd = self.app.wd
+        self.open_contact_view_by_index(index)
+        return wd.find_element_by_id("content").text
+
+
