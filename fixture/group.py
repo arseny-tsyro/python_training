@@ -59,6 +59,29 @@ class GroupHelper:
         wd.find_element_by_name("update").click()
         self.group_cache = None
 
+    def edit_by_id(self, id, group):
+        wd = self.app.wd
+        self.load_groups_page()
+        self.select_by_id(id)
+        # go to edit page
+        wd.find_element_by_name("edit").click()
+        # edit info
+        if group.name:
+            wd.find_element_by_name("group_name").click()
+            wd.find_element_by_name("group_name").clear()
+            wd.find_element_by_name("group_name").send_keys(group.name)
+        if group.header:
+            wd.find_element_by_name("group_header").click()
+            wd.find_element_by_name("group_header").clear()
+            wd.find_element_by_name("group_header").send_keys(group.header)
+        if group.footer:
+            wd.find_element_by_name("group_footer").click()
+            wd.find_element_by_name("group_footer").clear()
+            wd.find_element_by_name("group_footer").send_keys(group.footer)
+        # submit changes
+        wd.find_element_by_name("update").click()
+        self.group_cache = None
+
     def select_by_index(self, index):
         wd = self.app.wd
         wd.find_elements_by_name("selected[]")[index].click()
