@@ -51,12 +51,16 @@ def merge_phones_like_on_home_page(con):
 
 def get_phones_like_on_view_page(con):
     phones = []
-    if con.home_num is not None:
+    if not is_empty(con.home_num):
         phones.append("H: %s" % con.home_num)
-    if con.mobile_num is not None:
+    if not is_empty(con.mobile_num):
         phones.append("M: %s" % con.mobile_num)
-    if con.work_num is not None:
+    if not is_empty(con.work_num):
         phones.append("W: %s" % con.work_num)
-    if con.phone2 is not None:
+    if not is_empty(con.phone2):
         phones.append("P: %s" % con.phone2)
     return phones
+
+
+def is_empty(tel):
+    return (tel is None) or (tel == '')
