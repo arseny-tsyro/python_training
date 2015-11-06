@@ -44,6 +44,17 @@ class ContactHelper:
         self.load_home_page()
         wd.find_elements_by_css_selector('img[alt="Details"]')[index].click()
 
+    def open_contact_view_by_id(self, id):
+        wd = self.app.wd
+        self.load_home_page()
+        for row in wd.find_elements_by_name("entry"):
+            cells = row.find_elements_by_tag_name("td")
+            row_id = cells[0].find_element_by_name("selected[]").get_attribute("value")
+            if id == row_id:
+                cells[6].find_element_by_css_selector('img[alt="Details"]').click()
+                break
+
+
     def create(self, contact):
         wd = self.app.wd
         # go to new contact page
@@ -321,6 +332,11 @@ class ContactHelper:
     def get_text_from_view_page(self, index):
         wd = self.app.wd
         self.open_contact_view_by_index(index)
+        return wd.find_element_by_id("content").text
+
+    def get_text_from_view_page_by_id(self, id):
+        wd = self.app.wd
+        self.open_contact_view_by_id(id)
         return wd.find_element_by_id("content").text
 
 

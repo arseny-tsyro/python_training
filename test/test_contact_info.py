@@ -12,12 +12,13 @@ def test_phones_on_home_page(app, db):
         assert con_ui.all_phones_from_home_page == merge_phones_like_on_home_page(con_db)
 
 
-def test_phones_on_contact_view_page(app):
-    text_from_view_page = app.contact.get_text_from_view_page(0)
-    contact_from_edit_page = app.contact.get_contact_info_from_edit_page(0)
-    phones_from_edit_page = get_phones_like_on_view_page(contact_from_edit_page)
-    for phone in phones_from_edit_page:
-        assert phone in text_from_view_page
+def test_phones_on_contact_view_page(app, db):
+    contacts_from_db = db.get_contact_list()
+    for con_db in contacts_from_db:
+        text_from_view_page = app.contact.get_text_from_view_page_by_id(con_db.id)
+        phones_from_db = get_phones_like_on_view_page(con_db)
+        for phone in phones_from_db:
+            assert phone in text_from_view_page
 
 
 def test_info_from_some_contact(app):
