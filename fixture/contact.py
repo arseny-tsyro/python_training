@@ -1,5 +1,6 @@
 __author__ = 'Arseniy'
 from model.contact import Contact
+from selenium.webdriver.support.select import Select
 import re
 
 
@@ -53,7 +54,6 @@ class ContactHelper:
             if id == row_id:
                 cells[6].find_element_by_css_selector('img[alt="Details"]').click()
                 break
-
 
     def create(self, contact):
         wd = self.app.wd
@@ -273,6 +273,14 @@ class ContactHelper:
         wd.switch_to_alert().accept()
         self.load_home_page()
         self.contact_cache = None
+
+    def add_to_group(self, contact, group):
+        wd = self.app.wd
+        self.load_home_page()
+        self.select_by_id(contact.id)
+        select = Select(wd.find_element_by_name("to_group"))
+        select.select_by_visible_text(group.name.strip())
+        wd.find_element_by_name("add").click()
 
     def count(self):
         wd = self.app.wd
