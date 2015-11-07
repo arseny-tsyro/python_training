@@ -282,6 +282,14 @@ class ContactHelper:
         select.select_by_visible_text(group.name.strip())
         wd.find_element_by_name("add").click()
 
+    def remove_from_group(self, contact, group):
+        wd = self.app.wd
+        self.load_home_page()
+        select = Select(wd.find_element_by_name("group"))
+        select.select_by_visible_text(group.name.strip())
+        self.select_by_id(contact.id)
+        wd.find_element_by_name("remove").click()
+
     def count(self):
         wd = self.app.wd
         self.load_home_page()
